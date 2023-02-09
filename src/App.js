@@ -1,24 +1,37 @@
 import logo from './logo.svg';
 import './App.css';
 import AppHeader from './AppHeader';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Bloglist from './Bloglist';
 
 function App() {
   const couse = "React js"
-  const [blogdate,change]=useState([
+  const [blogdate, change] = useState([
     { 'id': '1', 'title': 'Angular', 'desc': 'this content described about angular', 'author': 'jhon' },
     { 'id': '2', 'title': 'reactjs', 'desc': 'this content described about reactjs', 'author': 'rishan' },
     { 'id': '3', 'title': 'dot net core', 'desc': 'this content described about dot net core', 'author': 'jhon' },
     { 'id': '4', 'title': 'jQuery', 'desc': 'this content described about jQuery', 'author': 'rishan' },
     { 'id': '5', 'title': 'sql', 'desc': 'this content described about Sql', 'author': 'rishan' }
   ]);
+  
+  const [header,headchange]=useState("React class")
+  const FunctionDelete = (id) => {
+    // //console.log(id);  
+    // const newlist = blogdate.filter(item => item.id != id);
+    // change(newlist)
+    headchange("React");
+    console.log(header);
+  }
+  useEffect(() => {
+    console.log("use effect")
+  }, [blogdate,header])
   return (
     <div className="App">
       <header className="App-header">
-        <AppHeader title= "Welcome to react" course={couse}></AppHeader>
-        <Bloglist blog={blogdate.filter(item=>item.author=="rishan")} author="Author is rishan"/>
-        <Bloglist blog={blogdate.filter(item=>item.author=="jhon")} author="Author is jhon"/>
+        <AppHeader title="Welcome to react" course={couse}></AppHeader>
+        {/* <Bloglist blog={blogdate.filter(item=>item.author=="rishan")} author="Author is rishan"/>
+        <Bloglist blog={blogdate.filter(item=>item.author=="jhon")} author="Author is jhon"/> */}
+        <Bloglist blog={blogdate} author="All blogs" FunctionDelete={FunctionDelete} />
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
