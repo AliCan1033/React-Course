@@ -16,8 +16,10 @@ function App() {
   ]);
 
   const [header, headchange] = useState("React class");
-  const [compantdate, campanychange] = useState(null);
+  const [companydata, campanychange] = useState(null);
   const [isloaded, changeload] = useState(true);
+  const [errorinfo, SetError] = useState(null);
+
 
   const FunctionDelete = (id) => {
 
@@ -26,23 +28,33 @@ function App() {
   }
   useEffect(() => {
 
-    fetch("http://localhost:8000/company").then(res => {
+    fetch("http://localhost:8000/company1").then(res => { //burada urlden bir silinirse veriler gösterilir yoksa fail olur
+      console.log(res);
+      if (!res.ok) {
+        throw Error('Failed to fatch the data');
+      }
       return res.json();
-
     }).then(result => {
-           //setTimeout(() => {
-           campanychange(result);
-           changeload(false);
-      // }, 3000);
-
+      setTimeout(() => {
+        campanychange(result);
+        changeload(false);
+      }, 3000);
+    }).catch(res => {
+      SetError(res.message);
+      changeload(false);
     })
+
   }, [])
   return (
     <div className="App">
       <header className="App-header">
         <AppHeader title="Welcome to react" course={couse}></AppHeader>
+
+        {errorinfo && <div className='errormessage'>{errorinfo}</div>}
         {isloaded && <div>Please Wait .....</div>}
-        {compantdate && <Company companydata={compantdate}></Company>}
+        {companydata && <Company companydata={companydata}></Company>}
+
+
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.

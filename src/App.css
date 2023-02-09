@@ -34,6 +34,17 @@
   color: #61dafb;
 }
 
+table{
+  width: 100%;
+}
+td{
+  border: 2px solid #fff;
+}
+
+.errormessage{
+  color: red;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
